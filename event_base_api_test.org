@@ -1,0 +1,57 @@
+test event_base api
+
+#+BEGIN_SRC c
+/* event_base_test_api.c */
+/* 
+ * data: 2015-06-16 16:46
+ */
+
+#include <event2/event.h>
+#include <stdio.h>
+#include <stdlib.h> /* exit() */
+
+void event_base_api_test();
+
+int main(int argc, char **argv)
+{
+
+    printf("Hello, libevent!\n");
+
+    event_base_api_test();
+
+    return 0;
+}
+
+    
+void event_base_api_test()
+{
+    struct event_base *base;
+    enum event_method_feature f;
+    
+    base = event_base_new();
+    if (!base)
+    {
+	printf("create new event_base failed!\n");
+	event_base_free(base);
+	exit(-1);
+    }
+    
+    f = event_base_get_features(base);
+    if ( f & EV_FEATURE_ET )
+	printf("edge-trigger flag on\n");
+    if ( f & EV_FEATURE_O1 )
+	printf("O(1) flag on\n");
+    if ( f & EV_FEATURE_FDS )
+	printf("FDS flag on\n");
+    
+    printf("event_base use method is:[%s]\n",
+	   event_base_get_method(base));
+
+    event_base_free(base);
+}
+#+END_SRC
+
+build command
+#+BEGIN_SRC shell
+$ gcc -g event_base_api.c -o event_base_api -I/usr/local/include -levent
+#+END_SRC
