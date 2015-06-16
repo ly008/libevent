@@ -54,4 +54,18 @@ void event_base_api_test()
 build command
 #+BEGIN_SRC shell
 $ gcc -g event_base_api.c -o event_base_api -I/usr/local/include -levent
+
+$ ldd event_base_api
+	linux-vdso.so.1 =>  (0x00007fff8c0bb000)
+	libevent-2.0.so.5 => /usr/lib/x86_64-linux-gnu/libevent-2.0.so.5 (0x00007f9876dd1000)
+	libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007f9876a0c000)
+	libpthread.so.0 => /lib/x86_64-linux-gnu/libpthread.so.0 (0x00007f98767ed000)
+	/lib64/ld-linux-x86-64.so.2 (0x00007f987702c000)
+
+$ ./event_base_api 
+Hello, libevent!
+edge-trigger flag on
+O(1) flag on
+event_base use method is:[epoll]
+
 #+END_SRC
